@@ -20,9 +20,8 @@ public class BreachCheval extends CommandGroup{
 		addSequential(new DriveDistance(20));
 		addSequential(new SetIntakeAngle(IntakeConstants.kIntakeGround));
 		addSequential(new ShiftHigh());
-		addSequential(new DriveDistance(50));
-		addSequential(new SetIntakeAngle(IntakeConstants.kIntakeTucked));
-		addSequential(new DriveDistance(50));
+		addSequential(new DriveDistance(100));
+		addParallel(new SetIntakeAngle(IntakeConstants.kIntakeTucked));
 	}
 	
 }

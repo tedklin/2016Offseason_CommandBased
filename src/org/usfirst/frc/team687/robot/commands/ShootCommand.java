@@ -15,9 +15,8 @@ public class ShootCommand extends CommandGroup {
 
 	public ShootCommand(Location location) {
 		addSequential(new SnapToTarget());
-		addSequential(new SetFlywheelSpeed(location));
+		addParallel(new SetFlywheelSpeed(location));
 		addSequential(new SetShooterAngle(location));
-		addSequential(new Wait(1));
 		addSequential(new ShooterCompress(false));
 		addSequential(new ShooterPunch());
 	}
