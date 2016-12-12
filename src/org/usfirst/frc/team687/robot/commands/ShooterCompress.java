@@ -4,6 +4,13 @@ import org.usfirst.frc.team687.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Compression to hold ball in place while going over defenses or traversing the field
+ * 
+ * @author tedfoodlin
+ *
+ */
+
 public class ShooterCompress extends Command {
 	
 	private boolean m_compress;

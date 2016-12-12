@@ -5,6 +5,13 @@ import org.usfirst.frc.team687.robot.constants.DrivetrainConstants;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * Turn drivetrain to specified angle
+ * 
+ * @author tedfoodlin
+ *
+ */
+
 public class DriveTurnToAngle extends Command {
 	
 	private double m_angle;

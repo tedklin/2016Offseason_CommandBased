@@ -8,6 +8,13 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * Shooter lifter subsystem (to fix subsystem dependencies)
+ * 
+ * @author tedfoodlin
+ *
+ */
+
 public class ShooterLift extends Subsystem {
 
 	private CANTalon m_lifter;
