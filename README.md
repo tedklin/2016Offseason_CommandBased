@@ -1,5 +1,3 @@
-# 2016Offseason_CommandBased
-
-2016 Offseason Practice
+# 2016 Offseason Command Based Practice
 
 Command Based Mantis
