@@ -2,6 +2,7 @@
 package org.usfirst.frc.team687.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Much OO
+ * Much OO, much wow
  * 
  * @author tedfoodlin
  *
@@ -26,6 +27,8 @@ public class Robot extends IterativeRobot {
 	public static Intake intake;
 	public static Shooter shooter;
 	public static ShooterLift shooterLift;
+	public static PowerDistributionPanel pdp;
+	
 	public static OI oi;
 
     Command autonomousCommand;
@@ -40,6 +43,7 @@ public class Robot extends IterativeRobot {
 		intake = new Intake();
 		shooter = new Shooter();
 		shooterLift = new ShooterLift();
+		pdp = new PowerDistributionPanel();
 		
         autoProgram = new SendableChooser();
         autoProgram.addObject("Do Nothing", new DoNothing());
@@ -58,9 +62,14 @@ public class Robot extends IterativeRobot {
         autoProgram.addDefault("Breach Low Bar and Shoot", new BreachLowBarShoot());
         
         SmartDashboard.putData("Auto Program", autoProgram);
+        
+        SmartDashboard.putData(drive);
+        SmartDashboard.putData(intake);
+        SmartDashboard.putData(shooter);
+        SmartDashboard.putData(shooterLift);
     }
 	
-    public void disabledInit(){
+    public void disabledInit() {
 
     }
 	
@@ -78,6 +87,11 @@ public class Robot extends IterativeRobot {
 
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+        drive.reportToSmartDashboard();
+        intake.reportToSmartDashboard();
+        shooter.reportToSmartDashboard();
+        shooterLift.reportToSmartDashboard();
     }
 
     public void teleopInit() {
@@ -88,9 +102,19 @@ public class Robot extends IterativeRobot {
 
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+        drive.reportToSmartDashboard();
+        intake.reportToSmartDashboard();
+        shooter.reportToSmartDashboard();
+        shooterLift.reportToSmartDashboard();
     }
     
     public void testPeriodic() {
         LiveWindow.run();
+        
+        drive.reportToSmartDashboard();
+        intake.reportToSmartDashboard();
+        shooter.reportToSmartDashboard();
+        shooterLift.reportToSmartDashboard();
     }
 }

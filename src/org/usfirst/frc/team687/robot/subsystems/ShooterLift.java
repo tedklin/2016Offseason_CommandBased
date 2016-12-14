@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Shooter lifter subsystem (to fix subsystem dependencies)
@@ -68,6 +69,13 @@ public class ShooterLift extends Subsystem {
      */
     public void resetSensors() {
     	m_lifter.reset();
+    }
+    
+    /**
+     * Report to Smart Dashboard
+     */
+    public void reportToSmartDashboard() {
+    	SmartDashboard.putNumber("Shooter Angle", getCurrentAngle());
     }
 
 }

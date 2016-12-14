@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Shooter subsystem
@@ -145,5 +146,15 @@ public class Shooter extends Subsystem {
     public void resetSensors() {
     	m_leftFly.reset();
     	m_rightFly.reset();
+    }
+    
+    /**
+     * Report to Smart Dashboard
+     */
+    public void reportToSmartDashboard() {
+    	SmartDashboard.putNumber("Left Flywheel speed", m_leftFly.getSpeed());
+    	SmartDashboard.putNumber("Right Flywheel speed", m_rightFly.getSpeed());
+    	
+    	SmartDashboard.putNumber("Compression", getCompression());
     }
 }

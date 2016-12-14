@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Drivetrain subsystem
@@ -68,14 +69,18 @@ public class Drive extends Subsystem {
      * Shift to high gear
      */
     public void shiftUp() {
-    	m_shifter.set(DoubleSolenoid.Value.kForward);
+    	if (!isHighGear()) {
+    		m_shifter.set(DoubleSolenoid.Value.kForward);
+    	}
     }
     
     /**
      * Shift to low gear
      */
     public void shiftDown() {
-    	m_shifter.set(DoubleSolenoid.Value.kReverse);
+    	if (isHighGear()) {
+        	m_shifter.set(DoubleSolenoid.Value.kReverse);
+    	}
     }
     
     /**
@@ -133,6 +138,17 @@ public class Drive extends Subsystem {
     
     public void resetGyro() {
     	m_nav.reset();
+    }
+    
+    /**
+     * Report to the Smart Dashboard 
+     */
+    public void reportToSmartDashboard() {
+    	SmartDashboard.putNumber("Left Drive Encoder", getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Drive Encoder", getRightEncoderDistance());
+    	SmartDashboard.putNumber("Yaw", getYaw());
+    	
+    	SmartDashboard.putBoolean("In high gear", isHighGear());
     }
     
 }

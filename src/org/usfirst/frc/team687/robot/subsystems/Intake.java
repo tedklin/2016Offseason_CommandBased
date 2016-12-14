@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Intake subsystem
@@ -90,5 +91,12 @@ public class Intake extends Subsystem {
     public void resetSensors() {
     	m_intake.reset();
     	m_intakeAngle.reset();
+    }
+    
+    /**
+     * Report to Smart Dashboard
+     */
+    public void reportToSmartDashboard() {
+    	SmartDashboard.putNumber("Intake Angle", getCurrentAngle());
     }
 }
