@@ -83,6 +83,7 @@ public class DriveDistance extends Command {
     
     protected void end() {
     	m_motionProfileGenerator = null;
+    	Robot.drive.stopDrive();
     }
 
     protected void interrupted() {

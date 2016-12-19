@@ -79,6 +79,7 @@ public class SetIntakeAngle extends Command {
 	@Override
 	protected void end() {
     	m_motionProfileGenerator = null;
+    	Robot.intake.setAnglePower(0);
 	}
 
 	@Override

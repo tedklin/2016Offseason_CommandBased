@@ -23,7 +23,7 @@ public class BreachChevalShootB extends CommandGroup {
 		addSequential(new DriveTurnToAngle(DrivetrainConstants.getFirstAngleToTurn(path)));
 		addSequential(new DriveDistance(DrivetrainConstants.getMidSegment(path)));
 		addSequential(new DriveTurnToAngle(DrivetrainConstants.getSecondAngleToTurn(path)));
-		addSequential(new ShootCommand(ShooterConstants.Location.Batter));
+		addSequential(new ShootCommand(ShooterConstants.Location.OffBatter));
 	}
 
 }

@@ -34,7 +34,7 @@ public class SetFlywheelSpeed extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return m_desiredRate == 0;
+		return (Math.abs(m_desiredRate - Robot.shooter.getFlySpeed())) <= 10 || m_desiredRate == 0;
 	}
 
 	@Override

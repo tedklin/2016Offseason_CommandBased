@@ -43,6 +43,7 @@ public class DriveTurnToAngle extends Command {
 
 	@Override
 	protected void end() {
+		Robot.drive.stopDrive();
 	}
 
 	@Override

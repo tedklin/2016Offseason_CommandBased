@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Do Nothing
  * 
- * @author tedfoodlin
+ * @author vincent:)(not rly)
  *
  */
 

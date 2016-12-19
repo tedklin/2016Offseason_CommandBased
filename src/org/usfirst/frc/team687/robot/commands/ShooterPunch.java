@@ -33,7 +33,7 @@ public class ShooterPunch extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return Timer.getFPGATimestamp() >= m_startingTime + 2;
+		return Timer.getFPGATimestamp() >= m_startingTime + 1;
 	}
 
 	@Override

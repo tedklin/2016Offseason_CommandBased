@@ -28,8 +28,7 @@ public class DriveStraightDistancePID extends Command {
 	private NerdyPID m_pidRotController;
 	private NerdyPID m_pidDistController;
 	
-	private double m_distance;
-	private double distanceError;
+	private double m_setpoint;
 
 	private double rotPow;
 	private double straightPow;
@@ -54,8 +53,6 @@ public class DriveStraightDistancePID extends Command {
 
 	@Override
 	protected void execute() {
-    	distanceError = Math.min(m_distance - Robot.drive.getLeftEncoderDistance(), m_distance - Robot.drive.getRightEncoderDistance() );
-
     	rotPow = m_pidRotController.calculate((Robot.drive.getYaw() + 360) % 360);
     	straightPow = m_pidDistController.calculate((Robot.drive.getLeftEncoderDistance() + Robot.drive.getRightEncoderDistance())/2);
     	double[] pow = {rotPow + straightPow, -rotPow + straightPow};
@@ -66,11 +63,12 @@ public class DriveStraightDistancePID extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return distanceError <= 0;
+		return (Math.abs(m_setpoint - Robot.drive.getCurrentPosition()) < 5);
 	}
 
 	@Override
 	protected void end() {
+		Robot.drive.stopDrive();
 	}
 
 	@Override
