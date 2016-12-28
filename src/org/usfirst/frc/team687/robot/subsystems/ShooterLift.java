@@ -39,19 +39,11 @@ public class ShooterLift extends Subsystem {
 	@Override
     public void initDefaultCommand() { /* food */ };
 	
-    /**
-     * Set lifter power 
-     * 
-     * @param power (between +1.0 and -1.0)
-     */
     public void setLifterPower(double pow) {
     	m_lifter.changeControlMode(TalonControlMode.PercentVbus);
     	m_lifter.set(pow);
     }
     
-    /**
-     * @return current shooter angle
-     */
     public double getCurrentAngle() {
     	return m_lifter.getPosition();
     }
@@ -64,16 +56,10 @@ public class ShooterLift extends Subsystem {
     	resetSensors();
     }
     
-    /**
-     * Reset sensors
-     */
     public void resetSensors() {
     	m_lifter.reset();
     }
-    
-    /**
-     * Report to Smart Dashboard
-     */
+
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Shooter Angle", getCurrentAngle());
     }

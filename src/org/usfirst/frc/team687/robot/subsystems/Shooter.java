@@ -64,11 +64,6 @@ public class Shooter extends Subsystem {
 	@Override
     public void initDefaultCommand() { /* food */ };
     
-	/**
-	 * Set speed of flywheels
-	 * 
-	 * @param desiredRate
-	 */
 	public void setFlySpeed(double desiredRate) {
 		if (desiredRate == 0){
 			stopFly();
@@ -81,9 +76,6 @@ public class Shooter extends Subsystem {
 		}
 	}
 	
-	/**
-	 * Stop flywheels
-	 */
 	public void stopFly() {
 		m_leftFly.changeControlMode(TalonControlMode.PercentVbus);
 		m_rightFly.changeControlMode(TalonControlMode.PercentVbus);
@@ -91,23 +83,14 @@ public class Shooter extends Subsystem {
 		m_rightFly.set(0);
 	}
     
-    /**
-     * Punch ball into flywheels
-     */
     public void punch() {
     	m_punch.set(DoubleSolenoid.Value.kForward);
     }
     
-    /**
-     * Retract shooter punch
-     */
     public void retract() {
     	m_punch.set(DoubleSolenoid.Value.kReverse);
     }
     
-    /**
-     * @return flywheel speed
-     */
     public double getFlySpeed() {
     	return (m_leftFly.getSpeed() + m_rightFly.getSpeed()) / 2;
     }
@@ -124,10 +107,7 @@ public class Shooter extends Subsystem {
 			m_compress.set(DoubleSolenoid.Value.kReverse);
 		}
 	}
-	
-	/**
-	 * @return compression
-	 */
+
 	public double getCompression() {
 		return m_compression;
 	}
@@ -140,17 +120,11 @@ public class Shooter extends Subsystem {
     	resetSensors();
     }
     
-    /**
-     * Reset Talon sensors
-     */
     public void resetSensors() {
     	m_leftFly.reset();
     	m_rightFly.reset();
     }
     
-    /**
-     * Report to Smart Dashboard
-     */
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Flywheel speed", m_leftFly.getSpeed());
     	SmartDashboard.putNumber("Right Flywheel speed", m_rightFly.getSpeed());

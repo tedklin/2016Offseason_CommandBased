@@ -3,6 +3,7 @@ package org.usfirst.frc.team687.robot.subsystems;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.TankDrive;
 import org.usfirst.frc.team687.robot.utilities.Gearbox;
+import org.usfirst.frc.team687.robot.utilities.NerdyMath;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -61,47 +62,31 @@ public class Drive extends Subsystem {
      * @param right power
      */
     public void setSpeed(double lPow, double rPow) {
-    	m_leftGearbox.setSpeed(lPow);
-    	m_rightGearbox.setSpeed(rPow);
+    	m_leftGearbox.setSpeed(NerdyMath.limit(lPow, 1.0));
+    	m_rightGearbox.setSpeed(NerdyMath.limit(rPow, 1.0));
     }
     
-    /**
-     * Shift to high gear
-     */
     public void shiftUp() {
     	if (!isHighGear()) {
     		m_shifter.set(DoubleSolenoid.Value.kForward);
     	}
     }
     
-    /**
-     * Shift to low gear
-     */
     public void shiftDown() {
     	if (isHighGear()) {
         	m_shifter.set(DoubleSolenoid.Value.kReverse);
     	}
     }
     
-    /**
-     * @return if high gear
-     */
-    public boolean isHighGear()
-    {
+    public boolean isHighGear() {
     	return (m_shifter.get() == DoubleSolenoid.Value.kForward);
     }
-    
-    /**
-     * @return left encoder distance in ticks
-     */
-    public double getLeftEncoderDistance() {
+
+    public double getLeftEncoderTicks() {
     	return m_lEncoder.getRaw();
     }
-    
-    /**
-     * @return right encoder distance in ticks
-     */
-    public double getRightEncoderDistance() {
+
+    public double getRightEncoderTicks() {
     	return m_rEncoder.getRaw();
     }
     
@@ -109,11 +94,11 @@ public class Drive extends Subsystem {
      * @return average encoder position
      */
     public double getCurrentPosition() {
-    	return (getLeftEncoderDistance() + getRightEncoderDistance()) / 2;
+    	return (getLeftEncoderTicks() + getRightEncoderTicks()) / 2;
     }
     
     /**
-     * @return yaw from NavX
+     * @return yaw from NavX gyro
      */
     public double getYaw() {
     	return m_nav.getYaw();
@@ -140,12 +125,14 @@ public class Drive extends Subsystem {
     	m_nav.reset();
     }
     
-    /**
-     * Report to the Smart Dashboard 
-     */
+    public void resetEncoders() {
+    	m_lEncoder.reset();
+    	m_rEncoder.reset();
+    }
+    
     public void reportToSmartDashboard() {
-    	SmartDashboard.putNumber("Left Drive Encoder", getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Drive Encoder", getRightEncoderDistance());
+    	SmartDashboard.putNumber("Left Drive Encoder", getLeftEncoderTicks());
+    	SmartDashboard.putNumber("Right Drive Encoder", getRightEncoderTicks());
     	SmartDashboard.putNumber("Yaw", getYaw());
     	
     	SmartDashboard.putBoolean("In high gear", isHighGear());

@@ -8,14 +8,13 @@ import org.usfirst.frc.team687.robot.utilities.NerdyPID;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drive straight distance using PID (mainly for crossing defenses during auto)
+ * Locks the drivetrain in place (to counter defense when shooting)
  * 
- * @author Wesley
- * 
- * Modified by tedfoodlin to work as a Command
+ * @author tedlin
+ *
  */
 
-public class DriveStraightDistancePID extends Command {
+public class DriveBaseLock extends Command {
 	
 	private final double m_kRotP = DrivetrainConstants.kDriveRotationP;
 	private final double m_kRotI = DrivetrainConstants.kDriveRotationI;
@@ -26,22 +25,24 @@ public class DriveStraightDistancePID extends Command {
 	private final double m_kDistD = DrivetrainConstants.kDriveTranslationD;
 	
 	private NerdyPID m_pidRotController;
-	private NerdyPID m_pidDistController;
-	
-	private double m_setpoint;
+	private NerdyPID m_pidLeftDistController;
+	private NerdyPID m_pidRightDistController;
 
-	private double rotPow;
-	private double straightPow;
+	private double m_rotPow;
+	private double m_leftStraightPow;
+	private double m_rightStraightPow;
 	
-	public DriveStraightDistancePID(double distance) {
-		m_pidDistController = new NerdyPID(m_kDistP, m_kDistI, m_kDistD);
-		m_pidDistController.setDesired(distance);
+	public DriveBaseLock() {
+		m_pidLeftDistController = new NerdyPID(m_kDistP, m_kDistI, m_kDistD);
+		m_pidLeftDistController.setDesired(0);
+		m_pidRightDistController = new NerdyPID(m_kDistP, m_kDistI, m_kDistD);
+		m_pidRightDistController.setDesired(0);
 		
 		m_pidRotController = new NerdyPID(m_kRotP, m_kRotI, m_kRotD);
 		m_pidRotController.setDesired(0);
 		
-    	// subsystem dependencies
-		requires(Robot.drive);
+        // subsystem dependencies
+        requires(Robot.drive);
 	}
 
 	@Override
@@ -53,9 +54,10 @@ public class DriveStraightDistancePID extends Command {
 
 	@Override
 	protected void execute() {
-    	rotPow = m_pidRotController.calculate((Robot.drive.getYaw() + 360) % 360);
-    	straightPow = m_pidDistController.calculate((Robot.drive.getLeftEncoderTicks() + Robot.drive.getRightEncoderTicks())/2);
-    	double[] pow = {rotPow + straightPow, -rotPow + straightPow};
+    	m_rotPow = m_pidRotController.calculate((Robot.drive.getYaw() + 360) % 360);
+    	m_leftStraightPow = m_pidLeftDistController.calculate(Robot.drive.getLeftEncoderTicks());
+    	m_rightStraightPow = m_pidRightDistController.calculate(Robot.drive.getRightEncoderTicks());
+    	double[] pow = {m_rotPow + m_leftStraightPow, -m_rotPow + m_rightStraightPow};
 		pow = NerdyMath.normalize(pow, false);
 		
 		Robot.drive.setSpeed(pow[0], pow[1]);
@@ -63,12 +65,11 @@ public class DriveStraightDistancePID extends Command {
 
 	@Override
 	protected boolean isFinished() {
-		return (Math.abs(m_setpoint - Robot.drive.getCurrentPosition()) < 5);
+		return false;
 	}
 
 	@Override
 	protected void end() {
-		Robot.drive.stopDrive();
 	}
 
 	@Override

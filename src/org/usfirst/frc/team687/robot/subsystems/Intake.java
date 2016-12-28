@@ -43,33 +43,19 @@ public class Intake extends Subsystem {
     	setDefaultCommand(new MoveIntakeAngle());
     }
     
-    /**
-     * @reuturn current intake angle in distance ticks
-     */
     public double getCurrentAngle() {
     	return m_intakeAngle.getPosition();
     }
     
-    /**
-     * Set angle position given power
-     * 
-     * @param pow
-     */
     public void setAnglePower(double pow) {
     	m_intakeAngle.changeControlMode(TalonControlMode.PercentVbus);
     	m_intakeAngle.set(pow);
     }
-    
-    /**
-     * Intake ball
-     */
+
     public void intake() {
     	m_intake.set(0.7);
     }
-    
-    /**
-     * Outtake ball
-     */
+
     public void outtake() {
     	m_intake.set(-0.7);
     }
@@ -84,18 +70,12 @@ public class Intake extends Subsystem {
     	
     	resetSensors();
     }
-    
-    /**
-     * Reset Talon sensors
-     */
+
     public void resetSensors() {
     	m_intake.reset();
     	m_intakeAngle.reset();
     }
-    
-    /**
-     * Report to Smart Dashboard
-     */
+
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Intake Angle", getCurrentAngle());
     }
