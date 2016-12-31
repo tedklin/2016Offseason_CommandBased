@@ -18,14 +18,12 @@ public class DrivetrainConstants {
 	public final static double kDriveTranslationI	= 0;
 	public final static double kDriveTranslationD	= 0;
 	
-	// theoretical values added by tedfoodlin 
 	public final static double kDriveMaxVelocity = 21;
 	public final static double kDriveMaxAccel = 4;
 	public final static double kDriveMaxDecel = -4;
 	
 	public final static double kV = 1.0 / kDriveMaxVelocity;
 	public final static double kA = 0.24;
-
 	
 	public enum Path {
 		CategoryA, CategoryA2, CategoryB, CategoryC, CategoryD, LowBar

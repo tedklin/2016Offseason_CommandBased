@@ -39,19 +39,19 @@ public class SetShooterAngle extends Command {
     	m_setpoint = ShooterConstants.getShooterAngle(location);
     	
         // subsystem dependencies
-        requires(Robot.shooterLift);
+        requires(Robot.shooter);
     }
 	
 	@Override
 	protected void initialize() {
-    	m_startPos = Robot.shooterLift.getCurrentAngle();
+    	m_startPos = Robot.shooter.getCurrentAngle();
     	m_angle = m_setpoint - m_startPos;
     	
     	m_motionProfileGenerator = null;
     	m_motionProfileGenerator = new MotionProfileGenerator(m_vmax, m_amax, m_dmax);
     	m_motionProfileGenerator.generateProfile(m_angle);
     	
-    	Robot.shooterLift.resetSensors();
+    	Robot.shooter.resetSensors();
     	m_startingTime = Timer.getFPGATimestamp();
     	m_error = 0;
 	}
@@ -63,19 +63,19 @@ public class SetShooterAngle extends Command {
 		double goalVelocity = m_motionProfileGenerator.readVelocity(currentTime);
 		double goalAcceleration = m_motionProfileGenerator.readAcceleration(currentTime);
 		m_setpointPos = m_motionProfileGenerator.readDistance(currentTime);
-		double actualPos = Robot.shooterLift.getCurrentAngle();
+		double actualPos = Robot.shooter.getCurrentAngle();
 		m_error = m_setpointPos - actualPos;
 		double pow = DrivetrainConstants.kDriveTranslationP * m_error 
 				+ DrivetrainConstants.kDriveTranslationD * ((m_error - m_lastError) / currentTime - goalVelocity)
 				+ DrivetrainConstants.kV * goalVelocity 
 				+ DrivetrainConstants.kA * goalAcceleration;
 		
-		Robot.shooterLift.setLifterPower(pow);;
+		Robot.shooter.setLifterPower(pow);;
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return Math.abs(m_setpoint - Robot.shooterLift.getCurrentAngle()) < 5;
+		return Math.abs(m_setpoint - Robot.shooter.getCurrentAngle()) < 5;
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class SetShooterAngle extends Command {
 
 	@Override
 	protected void interrupted() {
-		m_setpointPos = Robot.shooterLift.getCurrentAngle();
+		m_setpointPos = Robot.shooter.getCurrentAngle();
 		m_motionProfileGenerator = null;
 	}
 

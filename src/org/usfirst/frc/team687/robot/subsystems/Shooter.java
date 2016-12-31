@@ -5,9 +5,9 @@ import org.usfirst.frc.team687.robot.constants.ShooterConstants;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Shooter extends Subsystem {
-    
-	private CANTalon m_leftFly, m_rightFly;
+
+	private CANTalon m_lifter;
 	
 	private DoubleSolenoid m_punch;
 	private DoubleSolenoid m_compress;
@@ -30,70 +30,36 @@ public class Shooter extends Subsystem {
 	public Shooter() {
 		super();
 		
-		m_leftFly = new CANTalon(RobotMap.lFlyID);
-		m_rightFly = new CANTalon(RobotMap.rFlyID);
+		m_lifter = new CANTalon(RobotMap.shooterLiftID);
+		m_lifter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
+		
+		m_lifter.changeControlMode(TalonControlMode.PercentVbus);
+		
+		m_lifter.reverseSensor(false);
+		m_lifter.reverseOutput(false);
+
+		m_lifter.setP(ShooterConstants.kLiftP);
+		m_lifter.setI(ShooterConstants.kLiftI);
+		m_lifter.setD(ShooterConstants.kLiftD);
 		
 		m_punch = new DoubleSolenoid(RobotMap.punchID1, RobotMap.punchID2);
 		m_compress = new DoubleSolenoid(RobotMap.compressID1, RobotMap.compressID2);
 		m_lCompress = new AnalogInput(RobotMap.lCompressID);
 		m_rCompress = new AnalogInput(RobotMap.rCompressID);
-		
-		m_leftFly.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		m_rightFly.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
-		
-		m_leftFly.changeControlMode(TalonControlMode.Speed);
-		m_rightFly.changeControlMode(TalonControlMode.Speed);
-		
-		m_leftFly.enableBrakeMode(false);
-		m_rightFly.enableBrakeMode(false);
-
-		m_leftFly.setP(ShooterConstants.kFlywheelP);
-		m_leftFly.setI(ShooterConstants.kFlywheelI);
-		m_leftFly.setD(ShooterConstants.kFlywheelD);
-
-		m_rightFly.setP(ShooterConstants.kFlywheelP);
-		m_rightFly.setI(ShooterConstants.kFlywheelI);
-		m_rightFly.setD(ShooterConstants.kFlywheelD);
-		
-		m_leftFly.reverseSensor(true);
-		m_leftFly.reverseOutput(true);
-		m_rightFly.reverseSensor(false);
-		m_rightFly.reverseOutput(false);
-	}
-
-	@Override
-    public void initDefaultCommand() { /* food */ };
-    
-	public void setFlySpeed(double desiredRate) {
-		if (desiredRate == 0){
-			stopFly();
-		} 
-		else {
-			m_leftFly.changeControlMode(TalonControlMode.Speed);
-			m_rightFly.changeControlMode(TalonControlMode.Speed);
-			m_leftFly.set(desiredRate);
-			m_rightFly.set(desiredRate);
-		}
 	}
 	
-	public void stopFly() {
-		m_leftFly.changeControlMode(TalonControlMode.PercentVbus);
-		m_rightFly.changeControlMode(TalonControlMode.PercentVbus);
-		m_leftFly.set(0);
-		m_rightFly.set(0);
-	}
-    
-    public void punch() {
-    	m_punch.set(DoubleSolenoid.Value.kForward);
+	@Override
+    public void initDefaultCommand() { /* food */ };
+	
+    public void setLifterPower(double pow) {
+    	m_lifter.changeControlMode(TalonControlMode.PercentVbus);
+    	m_lifter.set(pow);
     }
     
-    public void retract() {
-    	m_punch.set(DoubleSolenoid.Value.kReverse);
+    public double getCurrentAngle() {
+    	return m_lifter.getPosition();
     }
     
-    public double getFlySpeed() {
-    	return (m_leftFly.getSpeed() + m_rightFly.getSpeed()) / 2;
-    }
     
 	/**
 	 * Compression to hold ball in place
@@ -112,23 +78,30 @@ public class Shooter extends Subsystem {
 		return m_compression;
 	}
     
+    public void punch() {
+    	m_punch.set(DoubleSolenoid.Value.kForward);
+    }
+    
+    public void retract() {
+    	m_punch.set(DoubleSolenoid.Value.kReverse);
+    }
+    
     /**
-     * Stop flywheels and reset sensors
+     * Stop shooter lift and reset sensors
      */
     public void stop() {
-    	stopFly();
+    	setLifterPower(0);
     	resetSensors();
     }
     
     public void resetSensors() {
-    	m_leftFly.reset();
-    	m_rightFly.reset();
+    	m_lifter.reset();
     }
-    
+
     public void reportToSmartDashboard() {
-    	SmartDashboard.putNumber("Left Flywheel speed", m_leftFly.getSpeed());
-    	SmartDashboard.putNumber("Right Flywheel speed", m_rightFly.getSpeed());
+    	SmartDashboard.putNumber("Shooter Angle", getCurrentAngle());
     	
     	SmartDashboard.putNumber("Compression", getCompression());
     }
+
 }

@@ -24,8 +24,8 @@ public class Robot extends IterativeRobot {
 
 	public static Drive drive;
 	public static Intake intake;
+	public static Flywheels flywheels;
 	public static Shooter shooter;
-	public static ShooterLift shooterLift;
 	public static PowerDistributionPanel pdp;
 	
 	public static OI oi;
@@ -40,8 +40,8 @@ public class Robot extends IterativeRobot {
 		
 		drive = new Drive();
 		intake = new Intake();
+		flywheels = new Flywheels();
 		shooter = new Shooter();
-		shooterLift = new ShooterLift();
 		pdp = new PowerDistributionPanel();
 		
         autoProgram = new SendableChooser();
@@ -64,8 +64,8 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putData(drive);
         SmartDashboard.putData(intake);
+        SmartDashboard.putData(flywheels);
         SmartDashboard.putData(shooter);
-        SmartDashboard.putData(shooterLift);
     }
 	
     public void disabledInit() {
@@ -89,8 +89,8 @@ public class Robot extends IterativeRobot {
         
         drive.reportToSmartDashboard();
         intake.reportToSmartDashboard();
+        flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
-        shooterLift.reportToSmartDashboard();
     }
 
     public void teleopInit() {
@@ -104,8 +104,8 @@ public class Robot extends IterativeRobot {
         
         drive.reportToSmartDashboard();
         intake.reportToSmartDashboard();
+        flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
-        shooterLift.reportToSmartDashboard();
     }
     
     public void testPeriodic() {
@@ -113,7 +113,7 @@ public class Robot extends IterativeRobot {
         
         drive.reportToSmartDashboard();
         intake.reportToSmartDashboard();
+        flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
-        shooterLift.reportToSmartDashboard();
     }
 }

@@ -23,6 +23,7 @@ public class ShootCommand extends CommandGroup {
 		addSequential(new ShooterCompress(false));
 		addSequential(new ShooterPunch());
 		addParallel(new SetFlywheelSpeed(Location.Resting));
-		addSequential(new SetShooterAngle(Location.Resting));
+		addParallel(new SetShooterAngle(Location.Resting));
+		addSequential(new SetIntakeAngle(IntakeConstants.kIntakeTucked));
 	}
 }

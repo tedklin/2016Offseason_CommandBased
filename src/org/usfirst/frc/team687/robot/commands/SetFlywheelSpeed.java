@@ -20,7 +20,7 @@ public class SetFlywheelSpeed extends Command {
 		m_desiredRate = ShooterConstants.getFlywheelSpeed(location);
 		
         // subsystem dependencies
-        requires(Robot.shooter);
+        requires(Robot.flywheels);
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public class SetFlywheelSpeed extends Command {
 
 	@Override
 	protected void execute() {
-		Robot.shooter.setFlySpeed(m_desiredRate);
+		Robot.flywheels.setFlySpeed(m_desiredRate);
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return (Math.abs(m_desiredRate - Robot.shooter.getFlySpeed())) <= 10 || m_desiredRate == 0;
+		return (Math.abs(m_desiredRate - Robot.flywheels.getFlySpeed())) <= 10 || m_desiredRate == 0;
 	}
 
 	@Override
