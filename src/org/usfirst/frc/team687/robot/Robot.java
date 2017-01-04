@@ -14,9 +14,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Much OO, much wow
+ *                          
+ * _._ _..._ .-',     _.._(`)
+ *'-. `     '  /-._.-'    ',/
+ *   )         \            '.
+ *  / _    _    |             \
+ * |  a    a    /              |
+ * \   .-.                     ;  
+ *  '-('' ).-'       ,'       ;
+ *     '-;           |      .'
+ *        \           \    /
+ *        | 7  .__  _.-\   \
+ *        | |  |  ``/  /`  /
+ *       /,_|  |   /,_/   /
+ *          /,_/      '`-'
  * 
- * @author tedfoodlin
+ * @author tedlin
  *
  */
 
