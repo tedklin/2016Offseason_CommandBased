@@ -19,8 +19,8 @@ public class SetFlywheelSpeed extends Command {
 	public SetFlywheelSpeed(Location location) {
 		m_desiredRate = ShooterConstants.getFlywheelSpeed(location);
 		
-        // subsystem dependencies
-        requires(Robot.flywheels);
+		// subsystem dependencies
+		requires(Robot.flywheels);
 	}
 
 	@Override
