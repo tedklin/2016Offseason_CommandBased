@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *       /,_|  |   /,_/   /
  *          /,_/      '`-'
  * 
- * @author tedlin
+ * @author tedfoodlin
  *
  */
 
