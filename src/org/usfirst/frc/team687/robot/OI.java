@@ -29,6 +29,8 @@ public class OI {
 	public JoystickButton zeroGyro_7;
 	public JoystickButton snapToTarget_8;
 	
+	public JoystickButton clearAll_4;
+	
 	// articJoy
 	public JoystickButton intake_9;
 	public JoystickButton outtake_7; 
@@ -57,6 +59,12 @@ public class OI {
 		zeroGyro_7.whenPressed(new ResetGyro());
 		snapToTarget_8 = new JoystickButton(driveJoyRight, 8);
 		snapToTarget_8.whenPressed(new SnapToTarget());
+		
+		clearAll_4 = new JoystickButton(driveJoyRight, 4);
+		clearAll_4.cancelWhenPressed(Robot.drive.getCurrentCommand());
+		clearAll_4.cancelWhenPressed(Robot.intake.getCurrentCommand());
+		clearAll_4.cancelWhenPressed(Robot.shooter.getCurrentCommand());
+		clearAll_4.cancelWhenPressed(Robot.flywheels.getCurrentCommand());
 		
 		intake_9 = new JoystickButton(articJoy, 9);
 		intake_9.whenPressed(new IntakeRollersOn());
