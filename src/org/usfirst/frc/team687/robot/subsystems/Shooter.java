@@ -28,13 +28,17 @@ public class Shooter extends Subsystem {
 	private double m_compression;
 	private AnalogInput m_lCompress, m_rCompress;
 	
+	private double m_desiredAngle = 0.0;
+	private double m_lifterAlpha = ShooterConstants.kLiftAlpha;
+	private double m_actualAngle = ShooterConstants.kMinHeight;
+	
 	public Shooter() {
 		super();
 		
 		m_lifter = new CANTalon(RobotMap.shooterLiftID);
 		m_lifter.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
 		
-		m_lifter.changeControlMode(TalonControlMode.PercentVbus);
+		m_lifter.changeControlMode(TalonControlMode.Position);
 		
 		m_lifter.reverseSensor(false);
 		m_lifter.reverseOutput(false);
@@ -55,6 +59,12 @@ public class Shooter extends Subsystem {
     public void setLifterPower(double pow) {
     	m_lifter.changeControlMode(TalonControlMode.PercentVbus);
     	m_lifter.set(pow);
+    }
+    
+    public void setLifterPos(double pos) {
+    	m_lifter.changeControlMode(TalonControlMode.Position);
+		m_actualAngle = m_actualAngle*(1-m_lifterAlpha) + m_desiredAngle*m_lifterAlpha; 
+    	m_lifter.set(pos);
     }
     
     public double getCurrentAngle() {
@@ -92,6 +102,7 @@ public class Shooter extends Subsystem {
      */
     public void stop() {
     	setLifterPower(0);
+    	compress(false);
     	resetSensors();
     }
     
@@ -101,7 +112,6 @@ public class Shooter extends Subsystem {
 
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Shooter Angle", getCurrentAngle());
-    	
     	SmartDashboard.putNumber("Compression", getCompression());
     }
 

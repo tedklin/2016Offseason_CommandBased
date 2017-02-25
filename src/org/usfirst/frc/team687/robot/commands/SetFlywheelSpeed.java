@@ -16,6 +16,13 @@ public class SetFlywheelSpeed extends Command {
 	
 	private double m_desiredRate;
 	
+	public SetFlywheelSpeed(double desired) {
+		m_desiredRate = desired;
+		
+		// subsystem dependencies
+		requires(Robot.flywheels);
+	}
+	
 	public SetFlywheelSpeed(Location location) {
 		m_desiredRate = ShooterConstants.getFlywheelSpeed(location);
 		

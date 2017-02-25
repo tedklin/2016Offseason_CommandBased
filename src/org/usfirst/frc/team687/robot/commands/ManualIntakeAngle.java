@@ -11,20 +11,20 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class MoveIntakeAngle extends Command {
+public class ManualIntakeAngle extends Command {
 	
-	public MoveIntakeAngle() {
+	public ManualIntakeAngle() {
 		// subsystem dependencies
 		requires(Robot.intake);
 	}
 
 	@Override
 	protected void initialize() {
-		Robot.intake.setAnglePower(Robot.oi.getArticJoy());
 	}
 
 	@Override
 	protected void execute() {
+		Robot.intake.setAnglePower(Robot.oi.getArticJoy());
 	}
 
 	@Override

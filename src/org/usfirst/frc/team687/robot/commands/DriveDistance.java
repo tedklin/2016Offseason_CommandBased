@@ -71,7 +71,7 @@ public class DriveDistance extends Command {
 				+ DrivetrainConstants.kV * goalVelocity 
 				+ DrivetrainConstants.kA * goalAcceleration;
 		
-		Robot.drive.setSpeed(pow,  pow);
+		Robot.drive.setPower(pow,  pow);
     }
 
     /**

@@ -33,7 +33,7 @@ public class DriveTurnToAngle extends Command {
 	protected void execute() {
 		m_error = m_angle - Robot.drive.getYaw();
 		power = DrivetrainConstants.kDriveRotationP * m_error;
-		Robot.drive.setSpeed(power, -power);
+		Robot.drive.setPower(power, -power);
 	}
 
 	@Override

@@ -17,30 +17,31 @@ public class SnapToTarget extends Command {
 	
 	private NetworkTable m_table;
 	private double m_error;
+	private double m_angleToTurn;
 
 	public SnapToTarget() {
 		// subsystem dependencies
 		requires(Robot.drive);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void initialize() {
 		m_table = NetworkTable.getTable("NerdyVision");
+		m_angleToTurn = m_table.getDouble("ANGLE_TO_TURN");
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute() {
-		m_error = m_table.getDouble("ANGLE_TO_TURN") - Robot.drive.getYaw();
+		m_error = m_angleToTurn - Robot.drive.getYaw();
 		double power = DrivetrainConstants.kDriveRotationP * m_error;
-		Robot.drive.setSpeed(power, -power);
+		Robot.drive.setPower(power, -power);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected boolean isFinished() {
 		// TODO Auto-generated method stub
-		return m_table.getBoolean("IS_ALIGNED");
+		return Math.abs(m_error) < 1;
 	}
 
 	@Override

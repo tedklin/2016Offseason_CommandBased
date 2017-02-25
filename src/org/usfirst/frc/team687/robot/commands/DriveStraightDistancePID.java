@@ -58,7 +58,7 @@ public class DriveStraightDistancePID extends Command {
     	double[] pow = {rotPow + straightPow, -rotPow + straightPow};
 		pow = NerdyMath.normalize(pow, false);
 		
-		Robot.drive.setSpeed(pow[0], pow[1]);
+		Robot.drive.setPower(pow[0], pow[1]);
 	}
 
 	@Override

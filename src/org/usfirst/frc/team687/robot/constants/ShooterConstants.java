@@ -24,13 +24,13 @@ public class ShooterConstants {
 	public final static int kBatterSpeed			= 2000;
 	public final static int kLowGoalSpeed			= 1000;
 
-	public static double kOuterworksAngle			= 0.800;
-	public static double kOffBatterAngle			= 0.850;
-	public static double kBatterAngle				= 0.900;
-	public static double kLowGoalAngle				= 0.450;
+	public static double kOuterWorksAngle			= 0.282;	// Long Range
+	public static double kBatterAngle				= 0.282;	// Batter THIS ONE
+	public static double kOffBatterAngle			= 0.282;	// Off Batter
+	public static double kLowGoalAngle				= 0.282;
 	
-	public final static double kMinHeight			= 0.652;
-	public final static double kMaxHeight			= 0.823;
+	public final static double kMinHeight			= 0.187;
+	public final static double kMaxHeight			= 0.282;
 	
 	public enum Location {
 		Outerworks, Batter, OffBatter, LowGoal, Resting
@@ -44,7 +44,7 @@ public class ShooterConstants {
 	 */
 	public static double getShooterAngle(Location location) {
 		if (location == Location.Outerworks) {
-			return kOuterworksAngle;
+			return kOuterWorksAngle;
 		} else if (location == Location.OffBatter) {
 			return kOffBatterAngle;
 		} else if (location == Location.Batter) {
@@ -54,7 +54,7 @@ public class ShooterConstants {
 		} else if (location == Location.Resting) {
 			return kMinHeight;
 		} else {
-			return kOuterworksAngle;
+			return kOuterWorksAngle;
 		}
 	}
 	

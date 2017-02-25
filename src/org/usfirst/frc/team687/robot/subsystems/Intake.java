@@ -1,6 +1,6 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
-import org.usfirst.frc.team687.robot.commands.MoveIntakeAngle;
+import org.usfirst.frc.team687.robot.commands.ManualIntakeAngle;
 import org.usfirst.frc.team687.robot.constants.IntakeConstants;
 
 import com.ctre.CANTalon;
@@ -41,11 +41,16 @@ public class Intake extends Subsystem {
 	}
 
     public void initDefaultCommand() {
-    	setDefaultCommand(new MoveIntakeAngle());
+    	setDefaultCommand(new ManualIntakeAngle());
     }
     
     public double getCurrentAngle() {
     	return m_intakeAngle.getPosition();
+    }
+    
+    public void setAnglePos(double pos) {
+    	m_intakeAngle.changeControlMode(TalonControlMode.Position);
+    	m_intakeAngle.set(pos);
     }
     
     public void setAnglePower(double pow) {
@@ -67,7 +72,7 @@ public class Intake extends Subsystem {
      */
     public void stop() {
     	m_intake.set(0);
-    	m_intakeAngle.set(0);
+    	setAnglePower(0);
     	
     	resetSensors();
     }

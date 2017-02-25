@@ -25,7 +25,7 @@ public class TankDrive extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.drive.setSpeed(Robot.oi.getDriveJoyL(), Robot.oi.getDriveJoyR());
+		Robot.drive.setPower(Robot.oi.getDriveJoyL(), Robot.oi.getDriveJoyR());
 	}
 
 	@Override

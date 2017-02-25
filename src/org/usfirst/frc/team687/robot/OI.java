@@ -40,6 +40,7 @@ public class OI {
 	public JoystickButton intakeBall_8;
 	
 	public JoystickButton intakeResting_6;
+	public JoystickButton intakeManual_10;
 	
 	public JoystickButton batterShot_2;
 	public JoystickButton outerworksShot_5;
@@ -71,6 +72,8 @@ public class OI {
 		
 		intakeResting_6 = new JoystickButton(articJoy, 6);
 		intakeResting_6.whenPressed(new SetIntakeAngle(IntakeConstants.kIntakeResting));
+		intakeManual_10 = new JoystickButton(articJoy, 10);
+		intakeManual_10.whenPressed(new ManualIntakeAngle());
 		
 		batterShot_2 = new JoystickButton(articJoy, 2);
 		batterShot_2.whenPressed(new ShootCommand(ShooterConstants.Location.Batter));
@@ -78,6 +81,11 @@ public class OI {
 		outerworksShot_5.whenPressed(new ShootCommand(ShooterConstants.Location.Outerworks));
 		lowgoalShot_4 = new JoystickButton(articJoy, 4);
 		lowgoalShot_4.whenPressed(new ShootCommand(ShooterConstants.Location.LowGoal));
+		
+		shotReset_3 = new JoystickButton(articJoy, 3);
+		shotReset_3.whenPressed(new SetFlywheelSpeed(0));
+		shotReset_3.whenReleased(new SetShooterAngle(ShooterConstants.Location.Resting));
+		shotReset_3.whenReleased(new ShooterCompress(false));
 		
 		// Smart Dashboard buttons
 		SmartDashboard.putData("Tank Drive", new TankDrive());
@@ -88,13 +96,13 @@ public class OI {
 		
 		SmartDashboard.putData("Intake", new IntakeRollersOn());
 		SmartDashboard.putData("Outtake", new IntakeRollersReverse());
-		SmartDashboard.putData("Move Intake Angle with Joysticks", new MoveIntakeAngle());
+		SmartDashboard.putData("Manual Intake Control", new ManualIntakeAngle());
 		SmartDashboard.putData("Intake Angle Rest", new SetIntakeAngle(IntakeConstants.kIntakeResting));
 		SmartDashboard.putData("Intake Angle Ball Pickup", new SetIntakeAngle(IntakeConstants.kIntakeBallPickup));
 		SmartDashboard.putData("Intake Angle Tuck", new SetIntakeAngle(IntakeConstants.kIntakeTucked));
 		
 		SmartDashboard.putData("Compress Ball", new ShooterCompress(true));
-		SmartDashboard.putData("Release Ball", new ShooterCompress(false));
+		SmartDashboard.putData("Decompress Ball", new ShooterCompress(false));
 		SmartDashboard.putData("Start Flywheels", new SetFlywheelSpeed(ShooterConstants.Location.OffBatter));
 		SmartDashboard.putData("Stop Flywheels", new SetFlywheelSpeed(ShooterConstants.Location.Resting));
 		SmartDashboard.putData("Adjust to Shooting Angle", new SetShooterAngle(ShooterConstants.Location.OffBatter));

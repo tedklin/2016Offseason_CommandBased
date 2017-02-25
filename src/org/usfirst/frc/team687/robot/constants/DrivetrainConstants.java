@@ -19,8 +19,8 @@ public class DrivetrainConstants {
 	public final static double kDriveTranslationD	= 0;
 	
 	public final static double kDriveMaxVelocity = 21;
-	public final static double kDriveMaxAccel = 4;
-	public final static double kDriveMaxDecel = -4;
+	public final static double kDriveMaxAccel = 1.5;
+	public final static double kDriveMaxDecel = -1.5;
 	
 	public final static double kV = 1.0 / kDriveMaxVelocity;
 	public final static double kA = 0.24;

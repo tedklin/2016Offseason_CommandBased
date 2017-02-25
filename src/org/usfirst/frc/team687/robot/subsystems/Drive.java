@@ -61,7 +61,7 @@ public class Drive extends Subsystem {
      * @param left power
      * @param right power
      */
-    public void setSpeed(double lPow, double rPow) {
+    public void setPower(double lPow, double rPow) {
     	m_leftGearbox.setSpeed(NerdyMath.limit(lPow, 1.0));
     	m_rightGearbox.setSpeed(NerdyMath.limit(rPow, 1.0));
     }
@@ -108,7 +108,7 @@ public class Drive extends Subsystem {
      * Stop drivetrain movement and reset sensors
      */
     public void stopDrive() {
-    	setSpeed(0, 0);
+    	setPower(0, 0);
     	resetSensors();
     }
     

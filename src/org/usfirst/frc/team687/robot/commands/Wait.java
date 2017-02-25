@@ -27,12 +27,11 @@ public class Wait extends Command {
 
 	@Override
 	protected void execute() {
-		m_currentTime = Timer.getFPGATimestamp();
 	}
 
 	@Override
 	protected boolean isFinished() {
-		return m_currentTime >= (m_startTime + m_timeout);
+		return Timer.getFPGATimestamp() >= (m_startTime + m_timeout);
 	}
 
 	@Override

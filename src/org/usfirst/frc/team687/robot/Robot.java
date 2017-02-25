@@ -44,9 +44,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 
     Command autonomousCommand;
-    static SendableChooser autoProgram;
-    static SendableChooser autoStartPosition;
-    static SendableChooser autoDefense;
+    SendableChooser<Command> autoProgram;
     
     public void robotInit() {
 		oi = new OI();
@@ -57,8 +55,8 @@ public class Robot extends IterativeRobot {
 		shooter = new Shooter();
 		pdp = new PowerDistributionPanel();
 		
-        autoProgram = new SendableChooser();
-        autoProgram.addObject("Do Nothing", new DoNothing());
+        autoProgram = new SendableChooser<>();
+        autoProgram.addDefault("Do Nothing", new DoNothing());
         autoProgram.addObject("Breach Cheval de Frises", new BreachCheval());
         autoProgram.addObject("Breach Ramparts", new BreachRamparts());
         autoProgram.addObject("Breach Moat", new BreachMoat());
@@ -71,7 +69,7 @@ public class Robot extends IterativeRobot {
         autoProgram.addObject("Breach Ramparts and Shoot", new BreachRampartsShoot());
         autoProgram.addObject("Breach Cheval de Frises and Shoot V1", new BreachChevalShootA());
         autoProgram.addObject("Breach Cheval de Frises and Shoot V2", new BreachChevalShootB());
-        autoProgram.addDefault("Breach Low Bar and Shoot", new BreachLowBarShoot());
+        autoProgram.addObject("Breach Low Bar and Shoot", new BreachLowBarShoot());
         
         SmartDashboard.putData("Auto Program", autoProgram);
         
@@ -90,7 +88,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
-        autonomousCommand = (Command) autoProgram.getSelected();
+        autonomousCommand = (Command)autoProgram.getSelected();
     	
         if (autonomousCommand != null) {
         	autonomousCommand.start();

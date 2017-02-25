@@ -17,6 +17,9 @@ public class ShootCommand extends CommandGroup {
 	public ShootCommand(Location location) {
 		addParallel(new SetFlywheelSpeed(location));
 		addSequential(new SnapToTarget());
+		addSequential(new SnapToTarget());
+		addSequential(new SnapToTarget());
+		addSequential(new SnapToTarget());
 		addParallel(new DriveBaseLock());
 		addSequential(new SetIntakeAngle(IntakeConstants.kIntakeGround));
 		addSequential(new SetShooterAngle(location));

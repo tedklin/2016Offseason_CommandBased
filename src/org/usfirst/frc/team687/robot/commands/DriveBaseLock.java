@@ -60,7 +60,7 @@ public class DriveBaseLock extends Command {
     	double[] pow = {m_rotPow + m_leftStraightPow, -m_rotPow + m_rightStraightPow};
 		pow = NerdyMath.normalize(pow, false);
 		
-		Robot.drive.setSpeed(pow[0], pow[1]);
+		Robot.drive.setPower(pow[0], pow[1]);
 	}
 
 	@Override
