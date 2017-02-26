@@ -63,7 +63,7 @@ public class DriveDistance extends Command {
     	double currentTime = Timer.getFPGATimestamp() - m_startingTime;
 		double goalVelocity = m_motionProfileGenerator.readVelocity(currentTime);
 		double goalAcceleration = m_motionProfileGenerator.readAcceleration(currentTime);
-		m_setpointPos = m_motionProfileGenerator.readDistance(currentTime);
+		m_setpointPos = m_motionProfileGenerator.readPosition(currentTime);
 		double actualPos = Robot.drive.getCurrentPosition();
 		m_error = m_setpointPos - actualPos;
 		double pow = DrivetrainConstants.kDriveTranslationP * m_error 

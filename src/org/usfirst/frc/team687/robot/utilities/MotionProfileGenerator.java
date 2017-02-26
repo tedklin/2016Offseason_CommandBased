@@ -13,62 +13,66 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class MotionProfileGenerator {
     
-	private double maxVelocity;
-	private double maxAccel;
-	private double maxDecel;
+	private double m_cruiseVelocity;
+	private double m_accel;
+	private double m_decel;
 	
-	private ArrayList<Double> time_data = new ArrayList<Double>();
-	private ArrayList<Double> velocity_data = new ArrayList<Double>();
-	private ArrayList<Double> distance_data = new ArrayList<Double>();
-	private ArrayList<Double> acceleration_data = new ArrayList<Double>();
+	private double m_clkInMs = 10;
+	private double m_clkInMinutes = m_clkInMs/60000;
 	
-    public MotionProfileGenerator(double vmax, double amax, double dmax) { 
-    	maxVelocity = vmax;
-    	maxAccel = amax;
-    	maxDecel = dmax;
+	private ArrayList<Double> m_timeProfile = new ArrayList<Double>();
+	private ArrayList<Double> m_velocityProfile = new ArrayList<Double>();
+	private ArrayList<Double> m_positionProfile = new ArrayList<Double>();
+	private ArrayList<Double> m_accelerationProfile = new ArrayList<Double>();
+	
+	/**
+	 * Motion Profile Generator
+	 * 
+	 * @param cruise velocity in RPM
+	 * @param acceleration in R/M^2
+	 * @param deceleration in R/M^2
+	 */
+    public MotionProfileGenerator(double cruiseVelocity, double accel, double decel) { 
+    	m_cruiseVelocity = cruiseVelocity;
+    	m_accel = accel;
+    	m_decel = decel;
     }
 
 	/**
 	 * Generate a trapezoidal motion profile using basic kinematic equations
 	 * 
-	 * @param distance desired
+	 * @param distance desired in rotations
 	 */
 	public void generateProfile(double distance) {
 		double time;
 		double x;
 		double v = 0;
 		
-		SmartDashboard.putNumber("Calculated Desired Distance", distance);
-		double accelTime = maxVelocity/maxAccel;
-		SmartDashboard.putNumber("Calculated Acceleration Time", accelTime);
-		double accelAndCruiseTime = distance/maxVelocity;
-		SmartDashboard.putNumber("Calculated Acceleration + Cruise Time", accelAndCruiseTime);
-		double decelTime = -maxVelocity/maxDecel;
-		SmartDashboard.putNumber("Calculated Deceleration Time", decelTime);
-		double end = accelAndCruiseTime + decelTime;
-		SmartDashboard.putNumber("Calculated Expected End Time", end);
+		double accelTime = m_cruiseVelocity/m_accel;
+		SmartDashboard.putNumber("Acceleration Time", accelTime);
+		double cruiseTime = (distance - (accelTime * m_cruiseVelocity)) / m_cruiseVelocity;
+		SmartDashboard.putNumber("Cruise Time", cruiseTime);
+		double accelAndCruiseTime = accelTime + cruiseTime;
+		SmartDashboard.putNumber("Acceleration + Cruise Time", accelAndCruiseTime);
+		double decelTime = -m_cruiseVelocity/m_decel;
+		SmartDashboard.putNumber("Deceleration Time", decelTime);
+		double totalTime = accelTime + cruiseTime + decelTime;
+		SmartDashboard.putNumber("Expected End Time", + totalTime);
 		
-		boolean triangular = isTriangular(distance);
-		SmartDashboard.putBoolean("Is triangular", triangular);
-		for (time = 0; time < accelTime; time += 0.02){
-			x = (0.5 * maxAccel * Math.pow(time, (double)2));
-			v = maxAccel * time;
-			addData(time, v, x, maxAccel);
+		for (time = 0; time < accelTime; time += m_clkInMinutes){
+			x = (0.5 * m_accel * Math.pow(time, (double)2));
+			v = m_accel * time;
+			addData(time, v, x, m_accel);
 		}
-		if (triangular == false){
-			for (time = accelTime; time < accelAndCruiseTime; time += 0.02){
-				x = (0.5 * (Math.pow(maxVelocity, 2) / maxAccel)) + (maxVelocity * (time - (maxVelocity/maxAccel)));
-				v = (maxVelocity);
-				addData(time, v, x, 0);
-			}
+		for (time = accelTime; time < accelAndCruiseTime; time += m_clkInMinutes){
+			x = (0.5 * (Math.pow(m_cruiseVelocity, 2) / m_accel)) + (m_cruiseVelocity * (time - (m_cruiseVelocity/m_accel)));
+			v = (m_cruiseVelocity);
+			addData(time, v, x, 0);
 		}
-		for (time = accelAndCruiseTime; time <= end; time += 0.02){
-			x = (double)(distance + 0.5 * maxDecel * Math.pow((time-end), 2));
-			v = maxVelocity + maxDecel * (time - accelAndCruiseTime);
-			if (v < 0.0001) {
-				v = 0;
-			}
-			addData(time, v, x, maxDecel);
+		for (time = accelAndCruiseTime; time <= totalTime; time += m_clkInMinutes){
+			x = (double)(distance + 0.5 * m_decel * Math.pow((time-totalTime), 2));
+			v = -m_accel * time + (m_cruiseVelocity + m_accel * accelAndCruiseTime);
+			addData(time, v, x, m_decel);
 		}
 		SmartDashboard.putNumber("Calculated Acutal End Time", time);
 	}
@@ -82,25 +86,10 @@ public class MotionProfileGenerator {
 	 * @param acceleration
 	 */
 	private void addData(double time, double v, double x, double acceleration) {
-		time_data.add(time);
-		velocity_data.add(v);
-		distance_data.add(x);
-		acceleration_data.add(acceleration);
-	}
-	
-	/**
-	 * Check if the maximum velocity can actually be reached
-	 * If the maximum velocity can't be reached, adjust it to the final velocity that it can reach with some tolerance
-	 */
-	private boolean isTriangular(double distance) {
-		double mid = distance/2;
-		double vFinal = Math.pow(2 * maxAccel * mid, 0.5);
-		if (vFinal < maxVelocity){
-			maxVelocity = vFinal - (maxVelocity/20);
-			return true;
-		} else {
-			return false;
-		}
+		m_timeProfile.add(time);
+		m_velocityProfile.add(v);
+		m_positionProfile.add(x);
+		m_accelerationProfile.add(acceleration);
 	}
 
 	/**
@@ -108,15 +97,15 @@ public class MotionProfileGenerator {
 	 * @return goal velocity
 	 */
 	public double readVelocity(double time) {
-		return velocity_data.get((int)(time/0.02));
+		return m_velocityProfile.get((int)(time/m_clkInMinutes));
 	}
 	
 	/**
 	 * @param time index
 	 * @return goal distance
 	 */
-	public double readDistance(double time) {
-		return distance_data.get((int)(time/0.02));
+	public double readPosition(double time) {
+		return m_positionProfile.get((int)(time/m_clkInMinutes));
 	}
 	
 	/**
@@ -124,6 +113,6 @@ public class MotionProfileGenerator {
 	 * @return goal acceleration
 	 */
 	public double readAcceleration(double time) {
-		return acceleration_data.get((int)(time/0.02));
+		return m_accelerationProfile.get((int)(time/m_clkInMinutes));
 	}
 }
