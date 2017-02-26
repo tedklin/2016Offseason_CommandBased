@@ -1,25 +1,27 @@
-package com.kauailabs.navx.frc;
-
 /* ============================================
-NavX-MXP source code is placed under the MIT license
-Copyright (c) 2015 Kauai Labs
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-===============================================
-*/
+ NavX-MXP source code is placed under the MIT license
+ Copyright (c) 2015 Kauai Labs
+
+ Permission is hereby granted, free of charge, to any person obtaining a copy
+ of this software and associated documentation files (the "Software"), to deal
+ in the Software without restriction, including without limitation the rights
+ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+
+ The above copyright notice and this permission notice shall be included in
+ all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ THE SOFTWARE.
+ ===============================================
+ */
+package com.kauailabs.navx;
 
 public class IMURegisters {
 
@@ -68,10 +70,10 @@ public class IMURegisters {
 
 	public static final byte NAVX_REG_YAW_L 			= 0x16; /* Lower 8 bits of Yaw     */
 	public static final byte NAVX_REG_YAW_H 			= 0x17; /* Upper 8 bits of Yaw     */
-	public static final byte NAVX_REG_PITCH_L 			= 0x18; /* Lower 8 bits of Pitch   */
-	public static final byte NAVX_REG_PITCH_H 			= 0x19; /* Upper 8 bits of Pitch   */
-	public static final byte NAVX_REG_ROLL_L 			= 0x1A; /* Lower 8 bits of Roll    */
-	public static final byte NAVX_REG_ROLL_H 			= 0x1B; /* Upper 8 bits of Roll    */
+    public static final byte NAVX_REG_ROLL_L            = 0x18; /* Lower 8 bits of Roll    */
+    public static final byte NAVX_REG_ROLL_H            = 0x19; /* Upper 8 bits of Roll    */
+	public static final byte NAVX_REG_PITCH_L 			= 0x1A; /* Lower 8 bits of Pitch   */
+	public static final byte NAVX_REG_PITCH_H 			= 0x1B; /* Upper 8 bits of Pitch   */
 	public static final byte NAVX_REG_HEADING_L 		= 0x1C; /* Lower 8 bits of Heading */
 	public static final byte NAVX_REG_HEADING_H 		= 0x1D; /* Upper 8 bits of Heading */
 	public static final byte NAVX_REG_FUSED_HEADING_L	= 0x1E; /* Upper 8 bits of Fused Heading */

@@ -9,6 +9,9 @@
 /*----------------------------------------------------------------------------*/
 package com.kauailabs.navx.frc;
 
+import com.kauailabs.navx.AHRSProtocol;
+import com.kauailabs.navx.IMUProtocol;
+
 interface IIOCompleteNotification {
     class BoardState {
         public byte  op_status;
@@ -20,10 +23,11 @@ interface IIOCompleteNotification {
         public short accel_fsr_g;
         public short gyro_fsr_dps;
     }
-    void setYawPitchRoll(IMUProtocol.YPRUpdate yprupdate);
-    void setAHRSData(AHRSProtocol.AHRSUpdate ahrs_update);
-    void setAHRSPosData(AHRSProtocol.AHRSPosUpdate ahrs_update);
-    void setRawData(IMUProtocol.GyroUpdate raw_data_update);
+    void setYawPitchRoll(IMUProtocol.YPRUpdate yprupdate, long sensor_timestamp);
+    void setAHRSData(AHRSProtocol.AHRSUpdate ahrs_update, long sensor_timestamp);
+    void setAHRSPosData(AHRSProtocol.AHRSPosUpdate ahrs_update, long sensor_timestamp);
+    void setRawData(IMUProtocol.GyroUpdate raw_data_update, long sensor_timestamp);
     void setBoardID(AHRSProtocol.BoardID board_id);
     void setBoardState( BoardState board_state);
+    void yawResetComplete();
 }
