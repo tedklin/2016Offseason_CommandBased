@@ -25,6 +25,9 @@ public class DrivetrainConstants {
 	public final static double kV = 1.0 / kDriveMaxVelocity;
 	public final static double kA = 0.24;
 	
+	public final static double reachDefenseDist = 20;
+	public final static double crossDefenseDist = 75;
+	
 	public enum Path {
 		CategoryA, CategoryA2, CategoryB, CategoryC, CategoryD, LowBar
 	}
