@@ -24,8 +24,8 @@ public class OI {
 	public Joystick articJoy = new Joystick(2);
 	
 	// buttons on driveJoyRight
-	public JoystickButton shiftUp_1;
-	public JoystickButton shiftDown_6;
+	public JoystickButton shiftUp_3;
+	public JoystickButton shiftDown_4;
 	public JoystickButton zeroGyro_7;
 	public JoystickButton snapToTarget_8;
 	
@@ -51,20 +51,20 @@ public class OI {
 	public JoystickButton shotReset_3;
 	
 	public OI() {
-		shiftUp_1 = new JoystickButton(driveJoyRight, 1);
-		shiftUp_1.whenPressed(new ShiftHigh());
-		shiftDown_6 = new JoystickButton(driveJoyRight, 6);
-		shiftDown_6.whenPressed(new ShiftLow());
+		shiftUp_3 = new JoystickButton(driveJoyRight, 3);
+		shiftUp_3.whenPressed(new ShiftHigh());
+		shiftDown_4 = new JoystickButton(driveJoyRight, 4);
+		shiftDown_4.whenPressed(new ShiftLow());
 		zeroGyro_7 = new JoystickButton(driveJoyRight, 7);
 		zeroGyro_7.whenPressed(new ResetGyro());
 		snapToTarget_8 = new JoystickButton(driveJoyRight, 8);
 		snapToTarget_8.whenPressed(new SnapToTarget());
 		
-		clearAll_4 = new JoystickButton(driveJoyRight, 4);
-		clearAll_4.cancelWhenPressed(Robot.drive.getCurrentCommand());
-		clearAll_4.cancelWhenPressed(Robot.intake.getCurrentCommand());
-		clearAll_4.cancelWhenPressed(Robot.shooter.getCurrentCommand());
-		clearAll_4.cancelWhenPressed(Robot.flywheels.getCurrentCommand());
+//		clearAll_4 = new JoystickButton(driveJoyRight, 4);
+//		clearAll_4.cancelWhenPressed(Robot.drive.getCurrentCommand());
+//		clearAll_4.cancelWhenPressed(Robot.intake.getCurrentCommand());
+//		clearAll_4.cancelWhenPressed(Robot.shooter.getCurrentCommand());
+//		clearAll_4.cancelWhenPressed(Robot.flywheels.getCurrentCommand());
 		
 		intake_9 = new JoystickButton(articJoy, 9);
 		intake_9.whenPressed(new IntakeRollersOn());

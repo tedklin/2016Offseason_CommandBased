@@ -41,14 +41,13 @@ public class Drive extends Subsystem {
 		m_rEncoder = new Encoder(RobotMap.rEncoderID1, RobotMap.rEncoderID2);
 		m_lEncoder = new Encoder(RobotMap.lEncoderID1, RobotMap.lEncoderID2);
 		
+		m_shifter = new DoubleSolenoid(RobotMap.shifterID1, RobotMap.shifterID2);
+		
 		m_leftGearbox = new Gearbox(m_lDrive1, m_lDrive2, m_lDrive3, m_lEncoder, m_shifter);
 		m_rightGearbox = new Gearbox(m_rDrive1, m_rDrive2, m_rDrive3, m_rEncoder, m_shifter);
 		m_rightGearbox.setReversed();
 		
 		m_nav = new AHRS(RobotMap.AHRSPort);
-		
-		m_shifter = new DoubleSolenoid(RobotMap.shifterID1, RobotMap.shifterID2);
-		shiftDown();
 	}
 
     public void initDefaultCommand() {
@@ -67,15 +66,11 @@ public class Drive extends Subsystem {
     }
     
     public void shiftUp() {
-    	if (!isHighGear()) {
-    		m_shifter.set(DoubleSolenoid.Value.kForward);
-    	}
+    	m_shifter.set(DoubleSolenoid.Value.kForward);
     }
     
     public void shiftDown() {
-    	if (isHighGear()) {
-        	m_shifter.set(DoubleSolenoid.Value.kReverse);
-    	}
+        m_shifter.set(DoubleSolenoid.Value.kReverse);
     }
     
     public boolean isHighGear() {
@@ -122,7 +117,7 @@ public class Drive extends Subsystem {
     }
     
     public void resetGyro() {
-    	m_nav.reset();
+    	m_nav.zeroYaw();
     }
     
     public void resetEncoders() {
@@ -133,6 +128,8 @@ public class Drive extends Subsystem {
     public void reportToSmartDashboard() {
     	SmartDashboard.putNumber("Left Drive Encoder", getLeftEncoderTicks());
     	SmartDashboard.putNumber("Right Drive Encoder", getRightEncoderTicks());
+    	SmartDashboard.putNumber("Left Drive Speed",  m_lEncoder.getRate());
+    	SmartDashboard.putNumber("Right Drive Speed",  m_rEncoder.getRate());
     	SmartDashboard.putNumber("Yaw", getYaw());
     	
     	SmartDashboard.putBoolean("In high gear", isHighGear());

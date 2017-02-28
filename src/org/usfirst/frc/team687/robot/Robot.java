@@ -47,13 +47,15 @@ public class Robot extends IterativeRobot {
     SendableChooser<Command> autoProgram;
     
     public void robotInit() {
-		oi = new OI();
-		
 		drive = new Drive();
 		intake = new Intake();
 		flywheels = new Flywheels();
 		shooter = new Shooter();
 		pdp = new PowerDistributionPanel();
+		
+		oi = new OI();
+		
+		drive.shiftDown();
 		
         autoProgram = new SendableChooser<>();
         autoProgram.addDefault("Do Nothing", new DoNothing());

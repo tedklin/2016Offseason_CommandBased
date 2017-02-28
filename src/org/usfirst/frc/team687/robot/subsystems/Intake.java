@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
+import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.ManualIntakeAngle;
 import org.usfirst.frc.team687.robot.constants.IntakeConstants;
 
@@ -24,6 +25,9 @@ public class Intake extends Subsystem {
     
 	public Intake() {
 		super();
+		
+		m_intake = new CANTalon(RobotMap.intakeRollersID);
+		m_intakeAngle = new CANTalon(RobotMap.intakeAngleID);
 		
     	m_intakeAngle.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Absolute);
     	m_intake.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
