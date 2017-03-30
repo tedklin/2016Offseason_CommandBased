@@ -45,7 +45,7 @@ public class Drive extends Subsystem {
 		
 		m_leftGearbox = new Gearbox(m_lDrive1, m_lDrive2, m_lDrive3, m_lEncoder, m_shifter);
 		m_rightGearbox = new Gearbox(m_rDrive1, m_rDrive2, m_rDrive3, m_rEncoder, m_shifter);
-		m_rightGearbox.setReversed();
+		// m_rightGearbox.setReversed();
 		
 		m_nav = new AHRS(RobotMap.AHRSPort);
 	}
@@ -64,6 +64,21 @@ public class Drive extends Subsystem {
     	m_leftGearbox.setSpeed(NerdyMath.limit(lPow, 1.0));
     	m_rightGearbox.setSpeed(NerdyMath.limit(rPow, 1.0));
     }
+    
+	public double squaredInput(double input)	{
+		return Math.pow(input, 2) * (input / Math.abs(input));
+	}
+    
+    /**
+     * Handles when the joystick moves slightly when you actually don't want it to move at all
+     * 
+     * @param value
+     * @param deadband
+     * @return value or 0 if within deadband
+     */
+	public double handleDeadband(double val, double deadband) {
+		return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
+	}
     
     public void shiftUp() {
     	m_shifter.set(DoubleSolenoid.Value.kForward);

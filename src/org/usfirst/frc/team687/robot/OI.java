@@ -151,6 +151,13 @@ public class OI {
 	}
 	
 	/**
+	 * @return if quick turn state in halo mode
+	 */
+	public boolean getQuickTurn() {
+		return driveJoyRight.getRawButton(1);
+	}
+	
+	/**
 	 * @return input power from artic joystick (-1.0 to +1.0)
 	 */
 	public double getArticJoy() {

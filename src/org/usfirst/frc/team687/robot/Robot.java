@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Command;
@@ -40,6 +41,7 @@ public class Robot extends IterativeRobot {
 	public static Flywheels flywheels;
 	public static Shooter shooter;
 	public static PowerDistributionPanel pdp;
+	public static Compressor compressor;
 	
 	public static OI oi;
 
@@ -47,15 +49,20 @@ public class Robot extends IterativeRobot {
     SendableChooser<Command> autoProgram;
     
     public void robotInit() {
+		pdp = new PowerDistributionPanel();
+		compressor = new Compressor();
+		compressor.start();
+    	
 		drive = new Drive();
 		intake = new Intake();
 		flywheels = new Flywheels();
 		shooter = new Shooter();
-		pdp = new PowerDistributionPanel();
 		
 		oi = new OI();
 		
 		drive.shiftDown();
+		drive.resetEncoders();
+		drive.resetGyro();
 		
         autoProgram = new SendableChooser<>();
         autoProgram.addDefault("Do Nothing", new DoNothing());
@@ -82,7 +89,7 @@ public class Robot extends IterativeRobot {
     }
 	
     public void disabledInit() {
-
+		Scheduler.getInstance().removeAll();
     }
 	
 	public void disabledPeriodic() {
@@ -90,6 +97,7 @@ public class Robot extends IterativeRobot {
 	}
 
     public void autonomousInit() {
+		Scheduler.getInstance().removeAll();
         autonomousCommand = (Command)autoProgram.getSelected();
     	
         if (autonomousCommand != null) {
@@ -104,9 +112,11 @@ public class Robot extends IterativeRobot {
         intake.reportToSmartDashboard();
         flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
+        SmartDashboard.putData("PDP", pdp);
     }
 
     public void teleopInit() {
+		Scheduler.getInstance().removeAll();
         if (autonomousCommand != null) {
         	autonomousCommand.cancel();
         }
@@ -119,6 +129,7 @@ public class Robot extends IterativeRobot {
         intake.reportToSmartDashboard();
         flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
+        SmartDashboard.putData("PDP", pdp);
     }
     
     public void testPeriodic() {
@@ -128,5 +139,6 @@ public class Robot extends IterativeRobot {
         intake.reportToSmartDashboard();
         flywheels.reportToSmartDashboard();
         shooter.reportToSmartDashboard();
+        SmartDashboard.putData("PDP", pdp);
     }
 }

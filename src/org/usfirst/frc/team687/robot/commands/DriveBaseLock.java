@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  * Locks the drivetrain in place (to counter defense when shooting)
  * 
- * @author tedlin
+ * @author tedfoodlin
  *
  */
 

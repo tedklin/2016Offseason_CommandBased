@@ -5,13 +5,15 @@ import org.usfirst.frc.team687.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Open loop tank drive
+ * Open loop tank drive with squared inputs
  * 
  * @author tedfoodlin
  *
  */
 
 public class TankDrive extends Command{
+	
+	private double m_lPow, m_rPow;
 
     public TankDrive() {
     	// subsystem dependencies
@@ -25,7 +27,9 @@ public class TankDrive extends Command{
 
 	@Override
 	protected void execute() {
-		Robot.drive.setPower(Robot.oi.getDriveJoyL(), Robot.oi.getDriveJoyR());
+		m_lPow = Robot.drive.squaredInput(Robot.oi.getDriveJoyL());
+		m_rPow = Robot.drive.squaredInput(Robot.oi.getDriveJoyR());
+		Robot.drive.setPower(m_lPow, -m_rPow);
 	}
 
 	@Override
@@ -35,10 +39,11 @@ public class TankDrive extends Command{
 
 	@Override
 	protected void end() {
+		Robot.drive.stopDrive();
 	}
 
 	@Override
 	protected void interrupted() {
+		end();
 	}
-
 }
