@@ -31,8 +31,8 @@ public class DrivetrainConstants {
 	public final static double kSensitivityHigh = 0.85;
 	public final static double kSensitivityLow = 0.75;
 	
-	public final static double wheelDeadband = 0.1;
-	public final static double throttleDeadband = 0.1;
+	public final static double wheelDeadband = 0.02;
+	public final static double throttleDeadband = 0.02;
 	
 	public final static double reachDefenseDist = 20;
 	public final static double crossDefenseDist = 75;

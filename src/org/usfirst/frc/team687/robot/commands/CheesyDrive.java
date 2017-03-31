@@ -7,13 +7,13 @@ import org.usfirst.frc.team687.robot.utilities.NerdyMath;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * A simplified implementation of 254's CheesyDrive
+ * An implementation of 254's CheesyDrive
  *
  * @author tedfoodlin
  *
  */
 
-public class HaloDrive extends Command{
+public class CheesyDrive extends Command{
 	
 	private boolean m_isQuickTurn;
 	private double m_wheel, m_throttle;
@@ -21,7 +21,7 @@ public class HaloDrive extends Command{
 	private double m_angularPow;
 	private double m_sensitivity;
 	
-	public HaloDrive() {
+	public CheesyDrive() {
 		//subsystem requirements
 		requires(Robot.drive);
 	}
@@ -46,7 +46,7 @@ public class HaloDrive extends Command{
 	    	m_sensitivity = DrivetrainConstants.kSensitivityLow;
 	    }
 	    
-	    if (m_isQuickTurn && Math.abs(m_throttle) <= 0.1) {
+	    if (m_isQuickTurn) {
 	    	m_angularPow = m_wheel;
 	    } else {
 	    	m_angularPow = Math.abs(m_throttle) * m_wheel * m_sensitivity;
