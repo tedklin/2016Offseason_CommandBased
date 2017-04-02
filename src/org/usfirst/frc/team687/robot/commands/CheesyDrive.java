@@ -20,6 +20,7 @@ public class CheesyDrive extends Command{
 	private double m_rPow, m_lPow;
 	private double m_angularPow;
 	private double m_sensitivity;
+	private double m_quickStopAccumulator;
 	
 	public CheesyDrive() {
 		//subsystem requirements
@@ -48,8 +49,17 @@ public class CheesyDrive extends Command{
 	    
 	    if (m_isQuickTurn) {
 	    	m_angularPow = m_wheel;
+            m_quickStopAccumulator = (1 - DrivetrainConstants.kDriveAlpha) * m_quickStopAccumulator + DrivetrainConstants.kDriveAlpha * NerdyMath.limit(m_wheel, 1.0) * 2;
+            m_throttle = 0;
 	    } else {
-	    	m_angularPow = Math.abs(m_throttle) * m_wheel * m_sensitivity;
+	    	m_angularPow = Math.abs(m_throttle) * m_wheel * m_sensitivity - m_quickStopAccumulator;
+            if (m_quickStopAccumulator > 1) {
+            	m_quickStopAccumulator -= 1;
+            } else if (m_quickStopAccumulator < -1) {
+            	m_quickStopAccumulator += 1;
+            } else {
+            	m_quickStopAccumulator = 0;
+            }
 	    }
 	    
 	    m_lPow += m_angularPow;

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team687.robot.subsystems;
 
+import org.usfirst.frc.team687.robot.Robot;
 import org.usfirst.frc.team687.robot.RobotMap;
 import org.usfirst.frc.team687.robot.commands.*;
 import org.usfirst.frc.team687.robot.utilities.Gearbox;
@@ -45,7 +46,7 @@ public class Drive extends Subsystem {
 		
 		m_leftGearbox = new Gearbox(m_lDrive1, m_lDrive2, m_lDrive3, m_lEncoder, m_shifter);
 		m_rightGearbox = new Gearbox(m_rDrive1, m_rDrive2, m_rDrive3, m_rEncoder, m_shifter);
-		// m_rightGearbox.setReversed();
+		m_rightGearbox.setReversed();
 		
 		m_nav = new AHRS(RobotMap.AHRSPort);
 	}
@@ -65,7 +66,7 @@ public class Drive extends Subsystem {
     	m_rightGearbox.setSpeed(NerdyMath.limit(rPow, 1.0));
     }
     
-	public double squaredInput(double input)	{
+	public double squareInput(double input)	{
 		return Math.pow(input, 2) * (input / Math.abs(input));
 	}
     
@@ -148,6 +149,7 @@ public class Drive extends Subsystem {
     	SmartDashboard.putNumber("Yaw", getYaw());
     	
     	SmartDashboard.putBoolean("In high gear", isHighGear());
+    	SmartDashboard.putBoolean("Quick turn", Robot.oi.getQuickTurn());
     }
     
 }

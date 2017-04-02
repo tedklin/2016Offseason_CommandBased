@@ -27,9 +27,9 @@ public class TankDrive extends Command{
 
 	@Override
 	protected void execute() {
-		m_lPow = Robot.drive.squaredInput(Robot.oi.getDriveJoyL());
-		m_rPow = Robot.drive.squaredInput(Robot.oi.getDriveJoyR());
-		Robot.drive.setPower(m_lPow, -m_rPow);
+		m_lPow = Robot.drive.squareInput(Robot.oi.getDriveJoyL());
+		m_rPow = Robot.drive.squareInput(Robot.oi.getDriveJoyR());
+		Robot.drive.setPower(m_lPow, m_rPow);
 	}
 
 	@Override
